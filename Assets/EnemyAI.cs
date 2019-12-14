@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 public class EnemyAI : MonoBehaviour
 {
     
@@ -15,6 +16,7 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         navMeshAgent= GetComponent<NavMeshAgent>();
+        
     }
 
     // Update is called once per frame
@@ -24,6 +26,7 @@ public class EnemyAI : MonoBehaviour
         distanceToTarget=Vector3.Distance(target.position,transform.position);
         if(distanceToTarget<= detectablerange){
              navMeshAgent.SetDestination(target.position);
+             
         }
         
     }
@@ -32,4 +35,6 @@ public class EnemyAI : MonoBehaviour
             Gizmos.color= new Color(1,1,0,0.75F);
             Gizmos.DrawWireSphere(transform.position,detectablerange);
         }
+    
 }
+
