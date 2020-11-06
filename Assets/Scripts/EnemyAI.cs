@@ -5,31 +5,43 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    [SerializeField] float chaseRange = 5f;
-    [SerializeField] float turnSpeed = 5f;
+    private enum ZombieType {Normal, Offensive, Crawl}
 
+    [SerializeField] ZombieType zombieType;
+    [SerializeField] float chaseRange = 5f;
+    [SerializeField] float warningRange = 2.5f;
+    [SerializeField] float turnSpeed = 5f;
+    [SerializeField] float stopTime = 0.2f;
+    [SerializeField] AudioClip[] warningAudioClip;
     NavMeshAgent navMeshAgent;
     float distanceToTarget = Mathf.Infinity;
     bool isProvoked = false;
     EnemyHealth health;
     Transform target;
+    Animator animator;
+    AudioSource warningAudioSource;
 
+    bool isWalkable = true;
     void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         health = GetComponent<EnemyHealth>();
         target = FindObjectOfType<PlayerHealth>().transform;
+        animator = GetComponent<Animator>();
+        warningAudioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
+
         if (health.IsDead())
         {
             enabled = false;
             navMeshAgent.enabled = false;
+            return;
         }
         distanceToTarget = Vector3.Distance(target.position, transform.position);
-        if (isProvoked)
+        if (isProvoked&&navMeshAgent.isActiveAndEnabled)
         {
             EngageTarget();
         }
@@ -37,15 +49,32 @@ public class EnemyAI : MonoBehaviour
         {
             isProvoked = true;
         }
-    }
+        else if (distanceToTarget > chaseRange)
+        {
+            navMeshAgent.isStopped = true;
+        }
 
+    }
+    private void ResumeWalk()
+    {
+        isWalkable = true;
+    }
     public void OnDamageTaken()
     {
-        isProvoked = true;
+        isWalkable = false;
+        animator.SetTrigger("damage");
+        navMeshAgent.isStopped = true;
+        isProvoked = true; 
+        Invoke("ResumeWalk", stopTime);
     }
 
     private void EngageTarget()
     {
+        if (!isWalkable)
+        {
+            return;
+        }
+        CheckWarningDistance();
         FaceTarget();
         if (distanceToTarget >= navMeshAgent.stoppingDistance)
         {
@@ -58,16 +87,40 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private void CheckWarningDistance()
+    {
+        if (Vector3.Distance(transform.position, Camera.main.transform.position) < warningRange && !warningAudioSource.isPlaying)
+        {
+            int clipIndex = (int)Random.Range(0, warningAudioClip.Length - 1);
+            warningAudioSource.clip = warningAudioClip[clipIndex];
+            warningAudioSource.Play();
+        }
+        else if (Vector3.Distance(transform.position, Camera.main.transform.position) > warningRange && warningAudioSource.isPlaying)
+        {
+            warningAudioSource.Stop();
+        }
+    }
+
     private void ChaseTarget()
     {
-        GetComponent<Animator>().SetBool("attack", false);
-        GetComponent<Animator>().SetTrigger("move");
+        animator.SetBool("attack", false);
+        animator.SetTrigger("move");
+        if (zombieType == ZombieType.Normal)
+        {
+            EnableMoving();
+        }
+    }
+
+    public void EnableMoving()
+    {
+        navMeshAgent.isStopped = false;
         navMeshAgent.SetDestination(target.position);
     }
 
     private void AttackTarget()
     {
-        GetComponent<Animator>().SetBool("attack", true);
+        //Debug.Log(distanceToTarget);
+        animator.SetBool("attack", true);
     }
 
     private void FaceTarget()

@@ -23,6 +23,7 @@ public class WeaponZoom : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
+            Debug.Log("getMouse");
             if (zoomedInToggle == false)
             {
                 ZoomIn();
