@@ -196,7 +196,6 @@ public class Weapon : MonoBehaviour
     }
     private void CreateHitImpact(RaycastHit hit)
     {
-        Debug.Log(hit.collider.name);
         GameObject impact = Instantiate(hitEffect, hit.point, Quaternion.LookRotation(hit.normal));
         Destroy(impact, .5f);
     }

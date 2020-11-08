@@ -49,7 +49,8 @@ public class EnemyAI : MonoBehaviour
         {
             isProvoked = true;
         }
-        else if (distanceToTarget > chaseRange)
+        
+        if (distanceToTarget > chaseRange)
         {
             navMeshAgent.isStopped = true;
         }

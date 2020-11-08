@@ -42,7 +42,7 @@ public class EnemyHealth : MonoBehaviour
         GetComponent<CapsuleCollider>().enabled = false;
         if (isDead) return;
         isDead = true;
-        //miniMapIcon.SetActive(false);
+        miniMapIcon.SetActive(false);
         GetComponent<Animator>().SetTrigger("die");
         Transform zombie = transform.GetChild(0);
         GetComponent<Animator>().enabled = false;
