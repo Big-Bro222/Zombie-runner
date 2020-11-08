@@ -11,8 +11,17 @@ public class WeaponZoom : MonoBehaviour
     [SerializeField] float zoomedInFOV = 20f;
     [SerializeField] float zoomOutSensitivity = 2f;
     [SerializeField] float zoomInSensitivity = .5f;
+    [SerializeField] Transform weaponModelTransform;
+    [SerializeField] Vector3 zoomInLocalPos;
 
     bool zoomedInToggle = false;
+
+    private Vector3 originalPosition;
+
+    private void Start()
+    {
+        originalPosition = weaponModelTransform.localPosition;
+    }
 
     private void OnDisable()
     {
@@ -21,6 +30,15 @@ public class WeaponZoom : MonoBehaviour
 
     private void Update()
     {
+        if (zoomedInToggle)
+        {
+            weaponModelTransform.localPosition = Vector3.Lerp(weaponModelTransform.localPosition, zoomInLocalPos, 0.5f);
+        }
+        else
+        {
+            weaponModelTransform.localPosition = Vector3.Lerp(weaponModelTransform.localPosition, originalPosition, 0.5f);
+        }
+
         if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("getMouse");

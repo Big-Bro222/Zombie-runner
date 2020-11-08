@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] float hitPoints = 100f;
+    [SerializeField] GameObject miniMapIcon;
     bool isDead = false;
     Collider[] colliders;
     private void Awake()
@@ -41,6 +42,7 @@ public class EnemyHealth : MonoBehaviour
         GetComponent<CapsuleCollider>().enabled = false;
         if (isDead) return;
         isDead = true;
+        //miniMapIcon.SetActive(false);
         GetComponent<Animator>().SetTrigger("die");
         Transform zombie = transform.GetChild(0);
         GetComponent<Animator>().enabled = false;

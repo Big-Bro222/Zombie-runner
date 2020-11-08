@@ -1,43 +1,41 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Ammo : MonoBehaviour
+[Serializable]
+public class Ammo
 {
-    [SerializeField] AmmoSlot[] ammoSlots;
+    public AmmoType ammoType;
+    public int ammoAmount;
+    public int Clip;
+    public int currentClip;
 
-    [System.Serializable]
-    private class AmmoSlot
+    public void ReduceCurrentAmmo()
     {
-        public AmmoType ammoType;
-        public int ammoAmount;
+       ammoAmount--;
+       currentClip--;
     }
 
-    public int GetCurrentAmmo(AmmoType ammoType)
+    public void IncreaseCurrentAmmo(int ammoAmount)
     {
-        return GetAmmoSlot(ammoType).ammoAmount;
+        ammoAmount += ammoAmount;
     }
 
-    public void ReduceCurrentAmmo(AmmoType ammoType)
+    public void Reload()
     {
-        GetAmmoSlot(ammoType).ammoAmount--;
+        int reloadAmount = Clip - currentClip;
+        currentClip = Clip;
+        ammoAmount -= reloadAmount;
     }
 
-    public void IncreaseCurrentAmmo(AmmoType ammoType, int ammoAmount)
+    public int GetCurrentAmmo()
     {
-        GetAmmoSlot(ammoType).ammoAmount += ammoAmount;
+        return ammoAmount;
     }
 
-    private AmmoSlot GetAmmoSlot(AmmoType ammoType)
+    public int GetCurrentClip()
     {
-        foreach (AmmoSlot slot in ammoSlots)
-        {
-            if (slot.ammoType == ammoType)
-            {
-                return slot;
-            }
-        }
-        return null;
+        return currentClip;
     }
 
 }

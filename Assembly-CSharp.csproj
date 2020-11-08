@@ -134,7 +134,6 @@
     <Compile Include="Assets\Asset Packs\Standard Assets\Utility\TimedObjectDestructor.cs" />
     <Compile Include="Assets\Asset Packs\Standard Assets\Utility\WaypointCircuit.cs" />
     <Compile Include="Assets\Asset Packs\Standard Assets\Utility\WaypointProgressTracker.cs" />
-    <Compile Include="Assets\MenuManager.cs" />
     <Compile Include="Assets\ProCore\ProGrids\Classes\pg_Constant.cs" />
     <Compile Include="Assets\ProCore\ProGrids\Classes\pg_Enum.cs" />
     <Compile Include="Assets\ProCore\ProGrids\Classes\pg_IconUtility.cs" />
@@ -142,7 +141,6 @@
     <Compile Include="Assets\ProCore\ProGrids\Classes\pg_SceneMeshRender.cs" />
     <Compile Include="Assets\ProCore\ProGrids\Classes\pg_Util.cs" />
     <Compile Include="Assets\ProCore\ProGrids\MonoBehaviour\pg_IgnoreSnap.cs" />
-    <Compile Include="Assets\ProgressSceneLoader.cs" />
     <Compile Include="Assets\Scripts\Ammo.cs" />
     <Compile Include="Assets\Scripts\AmmoPickup.cs" />
     <Compile Include="Assets\Scripts\AmmoType.cs" />
@@ -154,7 +152,10 @@
     <Compile Include="Assets\Scripts\EnemyAttack.cs" />
     <Compile Include="Assets\Scripts\EnemyHealth.cs" />
     <Compile Include="Assets\Scripts\FlashLightSystem.cs" />
+    <Compile Include="Assets\Scripts\MenuManager.cs" />
+    <Compile Include="Assets\Scripts\MiniMapCamera.cs" />
     <Compile Include="Assets\Scripts\PlayerHealth.cs" />
+    <Compile Include="Assets\Scripts\ProgressSceneLoader.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
     <Compile Include="Assets\Scripts\WeaponSwitcher.cs" />
@@ -173,6 +174,7 @@
     <None Include="Assets\Asset Packs\Standard Assets\Cameras\CameraGuidelines.txt" />
     <None Include="Assets\Asset Packs\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Asset Packs\Standard Assets\Environment\Water\Water4\Shaders\FXWater4Advanced.shader" />
+    <None Include="Assets\PolygonZombies\Shaders\POLYGON_Zombies.shader" />
     <None Include="Assets\Asset Packs\Standard Assets\Environment\Water (Basic)\DO_NOT_WORK_IN_VR.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />

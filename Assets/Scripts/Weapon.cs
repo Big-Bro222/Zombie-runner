@@ -6,16 +6,32 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+
+    public Ammo ammo;
+
+    [Serializable]
+    public class SoundSettings
+    {
+        public AudioClip shootingSFX;
+        public AudioClip reloadingSFX;
+        public AudioClip soldierReloadingSFX;
+        public AudioClip emptyClipSFX;
+    }
+    public SoundSettings soundSettings;
     [SerializeField] Camera FPCamera;
+    [SerializeField] AudioSource GlobalAudio;
     [SerializeField] float range = 100f;
     [SerializeField] float damage = 30f;
     [SerializeField] ParticleSystem muzzleFlash;
     [SerializeField] GameObject hitEffect;
-    [SerializeField] Ammo ammoSlot;
     [SerializeField] AmmoType ammoType;
     [SerializeField] float timeBetweenShots = 0.5f;
+    [SerializeField] float reloadTime = 0.5f;
+
     [SerializeField] TextMeshProUGUI ammoText;
-    [SerializeField] AudioClip shootingSound;
+    [SerializeField] TextMeshProUGUI currentClipText;
+    [SerializeField] bool Auto;
+
 
 
 
@@ -26,34 +42,74 @@ public class Weapon : MonoBehaviour
 
     private void OnEnable()
     {
+        DisplayAmmo();
         w_audioSource = GetComponent<AudioSource>();
         canShoot = true;
     }
 
     void Update()
     {
-        DisplayAmmo();
-        if (Input.GetMouseButton(0) && canShoot == true)
+        if (Auto)
         {
-            StartCoroutine(Shoot());
+            if (Input.GetMouseButton(0) && canShoot == true)
+            {
+                StartCoroutine(Shoot());
+            }
         }
+        else
+        {
+            if (Input.GetMouseButtonDown(0) && canShoot == true)
+            {
+                StartCoroutine(Shoot());
+            }
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (ammo.GetCurrentAmmo() > 0&&ammo.currentClip!=ammo.Clip)
+            {
+                StartCoroutine(AmmoReloading());
+            }
+        }
+    }
+
+
+    IEnumerator AmmoReloading()
+    {
+        canShoot = false;
+        if (ammo.GetCurrentAmmo() > 0)
+        {
+            w_audioSource.PlayOneShot(soundSettings.reloadingSFX);
+            GlobalAudio.PlayOneShot(soundSettings.soldierReloadingSFX);
+            ammo.Reload();
+        }
+        yield return new WaitForSeconds(reloadTime);
+        DisplayAmmo();
+        canShoot = true;
     }
 
     private void DisplayAmmo()
     {
-        int currentAmmo = ammoSlot.GetCurrentAmmo(ammoType);
+        int currentAmmo = ammo.GetCurrentAmmo();
         ammoText.text = currentAmmo.ToString();
+        currentClipText.text = ammo.GetCurrentClip().ToString();
     }
 
     IEnumerator Shoot()
     {
         canShoot = false;
-        if (ammoSlot.GetCurrentAmmo(ammoType) > 0)
+        if (ammo.GetCurrentClip()> 0)
         {
-            w_audioSource.PlayOneShot(shootingSound);
+            w_audioSource.PlayOneShot(soundSettings.shootingSFX);
             PlayMuzzleFlash();
             ProcessRaycast();
-            ammoSlot.ReduceCurrentAmmo(ammoType);
+            ammo.ReduceCurrentAmmo();
+            DisplayAmmo();
+        }
+        else
+        {
+            w_audioSource.PlayOneShot(soundSettings.emptyClipSFX);
         }
         yield return new WaitForSeconds(timeBetweenShots);
         canShoot = true;
