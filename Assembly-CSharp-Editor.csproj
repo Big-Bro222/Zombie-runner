@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Asset Packs\DarkFantasyKit [Free]\Readme\Parts\Editor\ReadmeEditor.cs" />
     <Compile Include="Assets\Asset Packs\Standard Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" />
     <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\GerstnerDisplaceEditor.cs" />
     <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\PlanarReflectionEditor.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Assets\ProCore\ProGrids\Editor\pg_ParameterWindow.cs" />
     <Compile Include="Assets\ProCore\ProGrids\Editor\pg_Preferences.cs" />
     <Compile Include="Assets\ProCore\ProGrids\Editor\pg_ToggleContent.cs" />
+    <Compile Include="Assets\VolumeticLights\Assets\Editor\ImageEffects\TonemappingEditor.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:/Unity/2019.4.11f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
