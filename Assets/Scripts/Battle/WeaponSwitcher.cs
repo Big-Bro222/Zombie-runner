@@ -19,40 +19,47 @@ public class WeaponSwitcher : MonoBehaviour
 
         ProcessKeyInput();
         ProcessScrollWheel();
-
-        if (previousWeapon != currentWeapon)
-        {
-            SetWeaponActive();
-        }
     }
 
     private void ProcessScrollWheel()
     {
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            GetComponentInParent<AudioSource>().PlayOneShot(weaponSwitchSFX);
-            if (currentWeapon >= transform.childCount - 1)
-            {
-                currentWeapon = 0;
-            }
-            else
-            {
-                currentWeapon++;
-            }
+            SwitchToNextWeapon();
         }
-
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        else if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            GetComponentInParent<AudioSource>().PlayOneShot(weaponSwitchSFX);
-            if (currentWeapon <= 0)
-            {
-                currentWeapon = transform.childCount - 1;
-            }
-            else
-            {
-                currentWeapon--;
-            }
+            SwitchToPreviousWeapon();
         }
+    }
+
+    public void SwitchToPreviousWeapon()
+    {
+        GetComponentInParent<AudioSource>().PlayOneShot(weaponSwitchSFX);
+        if (currentWeapon <= 0)
+        {
+            currentWeapon = transform.childCount - 1;
+        }
+        else
+        {
+            currentWeapon--;
+        }
+        SetWeaponActive();
+
+    }
+
+    public void SwitchToNextWeapon()
+    {
+        GetComponentInParent<AudioSource>().PlayOneShot(weaponSwitchSFX);
+        if (currentWeapon >= transform.childCount - 1)
+        {
+            currentWeapon = 0;
+        }
+        else
+        {
+            currentWeapon++;
+        }
+        SetWeaponActive();
     }
 
     private void ProcessKeyInput()

@@ -26,10 +26,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.040378917
-  m_Height: 0.15676454
+  m_Radius: 0.07108764
+  m_Height: 0.23252693
   m_Direction: 1
-  m_Center: {x: 2.2240457e-10, y: 0.027264819, z: -0.004934076}
+  m_Center: {x: 0.035930514, y: 0.042228505, z: -0.0101558715}
 --- !u!82 &-4573382077851200861
 AudioSource:
   m_ObjectHideFlags: 0
@@ -139,9 +139,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionSFX: {fileID: 8300000, guid: 05cff6df824f9f6418b6d21a69804fe1, type: 3}
-  explosionVFX: {fileID: 0}
+  explosionVFX: {fileID: 3773311444528017615, guid: 3bf8a07d08db9074c8154e178ba27bab,
+    type: 3}
   selfDestroyDelay: 1
-  explosionRadius: 20
+  explosionRadius: 10
   explosionForce: 10
   explosionDemage: 120
 --- !u!1001 &6497085598306078741

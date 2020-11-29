@@ -4,26 +4,27 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
-    [SerializeField] float hitPoints = 100f;
+    [SerializeField] int Health = 100;
     [SerializeField] GameObject miniMapIcon;
     bool isDead = false;
+    private int hitPoints;
     Collider[] colliders;
     private void Awake()
     {
-        //colliders = GetComponentsInChildren<Collider>();
-        //foreach(Collider collider in colliders)
-        //{
-        //    collider.enabled = false;
-        //}
-        //GetComponent<CapsuleCollider>().enabled = true;
-
+        hitPoints = Health;
+        colliders = GetComponentsInChildren<Collider>();
+        foreach(Collider collider in colliders)
+        {
+            collider.enabled = false;
+        }
+        GetComponent<Collider>().enabled = true;
     }
     public bool IsDead()
     {
         return isDead;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         BroadcastMessage("OnDamageTaken");
         hitPoints -= damage;
@@ -35,10 +36,13 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
-        //foreach (Collider collider in colliders)
-        //{
-        //    collider.enabled = true;
-        //}
+        //Update score
+        ScoreSystem.Instance.AddScore(Health);
+        ScoreView.Instance.StartCoroutine(ScoreView.Instance.UpdateCurrentScore());
+        foreach (Collider collider in colliders)
+        {
+            collider.enabled = true;
+        }
         GetComponent<CapsuleCollider>().enabled = false;
         if (isDead) return;
         isDead = true;
@@ -46,6 +50,7 @@ public class EnemyHealth : MonoBehaviour
         GetComponent<Animator>().SetTrigger("die");
         Transform zombie = transform.GetChild(0);
         GetComponent<Animator>().enabled = false;
-        Destroy(gameObject, 15);
+        GetComponent<ZombieAI>().enabled = false;
+        gameObject.SetActive(false);
     }
 }

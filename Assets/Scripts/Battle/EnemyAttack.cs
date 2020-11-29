@@ -4,20 +4,31 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    PlayerHealth target;
-    [SerializeField] float damage = 40f;
+    Transform gameTarget;
+    [SerializeField] int damage = 40;
 
     void Start()
     {
-        target = FindObjectOfType<PlayerHealth>();
+
+    }
+
+    public void SetTarget(Transform target)
+    {
+        gameTarget = target;
     }
 
     public void AttackHitEvent()
     {
-        Debug.Log("getCalled");
-        if (target == null) return;
-        target.TakeDamage(damage);
-        target.GetComponent<DisplayDamage>().ShowDamageImpact();
+        if (gameTarget == null) return;
+        if (gameTarget.GetComponent<PlayerHealth>())
+        {
+            gameTarget.GetComponent<PlayerHealth>().TakeDamage(damage);
+            gameTarget.GetComponent<DisplayDamage>().ShowDamageImpact();
+        }
+        else
+        {
+            gameTarget.GetComponent<PropsHealthUpdate>().TakeDamage(damage);
+        }
     }
 
 }

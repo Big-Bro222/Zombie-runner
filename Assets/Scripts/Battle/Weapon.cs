@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-
+    
     public Ammo ammo;
 
     [Serializable]
@@ -21,7 +21,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] Camera FPCamera;
     [SerializeField] AudioSource GlobalAudio;
     [SerializeField] float range = 100f;
-    [SerializeField] float damage = 30f;
+    [SerializeField] int damage = 30;
     [SerializeField] ParticleSystem muzzleFlash;
     [SerializeField] GameObject hitEffect;
     [SerializeField] AmmoType ammoType;
@@ -31,20 +31,32 @@ public class Weapon : MonoBehaviour
     [SerializeField] TextMeshProUGUI ammoText;
     [SerializeField] TextMeshProUGUI currentClipText;
     [SerializeField] bool Auto;
+    [SerializeField] bool isShotgun;
+    [SerializeField] Transform disabledWeapon;
 
+    private int defaultAmmoAmount;
 
+    private void Start()
+    {
+        defaultAmmoAmount = ammo.ammoAmount;
+    }
 
+    public void AmmoReset()
+    {
+        ammo.ammoAmount = defaultAmmoAmount;
+        ammo.currentClip = ammo.Clip;
 
+    }
 
     private AudioSource w_audioSource;
 
     bool canShoot = true;
-
     private void OnEnable()
     {
         DisplayAmmo();
         w_audioSource = GetComponent<AudioSource>();
         canShoot = true;
+       
     }
 
     void Update()
@@ -78,21 +90,25 @@ public class Weapon : MonoBehaviour
     IEnumerator AmmoReloading()
     {
         canShoot = false;
-        if (ammo.GetCurrentAmmo() > 0)
+        if (ammo.GetCurrentRemain() > 0)
         {
             w_audioSource.PlayOneShot(soundSettings.reloadingSFX);
             GlobalAudio.PlayOneShot(soundSettings.soldierReloadingSFX);
             ammo.Reload();
+        }
+        else
+        {
+            w_audioSource.PlayOneShot(soundSettings.emptyClipSFX);
         }
         yield return new WaitForSeconds(reloadTime);
         DisplayAmmo();
         canShoot = true;
     }
 
-    private void DisplayAmmo()
+    public void DisplayAmmo()
     {
-        int currentAmmo = ammo.GetCurrentAmmo();
-        ammoText.text = currentAmmo.ToString();
+        int currentRemain = ammo.GetCurrentRemain();
+        ammoText.text = currentRemain.ToString();
         currentClipText.text = ammo.GetCurrentClip().ToString();
     }
 
@@ -113,6 +129,13 @@ public class Weapon : MonoBehaviour
         }
         yield return new WaitForSeconds(timeBetweenShots);
         canShoot = true;
+        if (ammo.GetCurrentRemain() <= 0&&!ammo.isInfinity&&ammo.currentClip<=0)
+        {
+            GetComponentInParent<WeaponSwitcher>().SwitchToNextWeapon();
+            AmmoReset();
+            transform.SetParent(disabledWeapon);
+
+        }
     }
 
     private void PlayMuzzleFlash()
@@ -122,13 +145,13 @@ public class Weapon : MonoBehaviour
 
     private void ProcessRaycast()
     {
-        if (!(ammoType==AmmoType.Shells))
+        if (!isShotgun)
         {
             RaycastHit hit;
             if (Physics.Raycast(FPCamera.transform.position, FPCamera.transform.forward, out hit, range))
             {
                 CreateHitImpact(hit);
-                EnemyHealth target = hit.transform.GetComponent<EnemyHealth>();
+                EnemyHealth target = hit.transform.GetComponentInParent<EnemyHealth>();
                 if (target == null) return;
                 target.TakeDamage(damage);
             }
@@ -184,7 +207,7 @@ public class Weapon : MonoBehaviour
             CreateHitImpact(shotGunHits);
             foreach (RaycastHit shotHit in shotGunHits)
             {
-                EnemyHealth target = shotHit.transform.GetComponent<EnemyHealth>();
+                EnemyHealth target = shotHit.transform.GetComponentInParent<EnemyHealth>();
                 if (target == null) return;
                 Debug.Log(target.name);
                 float distanceHitGun = Vector3.Distance(shotHit.point, FPCamera.transform.position);
@@ -208,7 +231,7 @@ public class Weapon : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        if (ammoType == AmmoType.Shells)
+        if (isShotgun)
         {
             //Ray ray = new Ray(FPCamera.transform.position, FPCamera.transform.forward + 0.25f * FPCamera.transform.right);
             Debug.DrawRay(FPCamera.transform.position, (FPCamera.transform.forward + 0.15f * FPCamera.transform.right).normalized * range);

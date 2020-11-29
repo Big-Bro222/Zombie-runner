@@ -9,15 +9,15 @@ public class ThrowablePrefab : MonoBehaviour
     [SerializeField] float selfDestroyDelay=1;
     [SerializeField] float explosionRadius;
     [SerializeField] float explosionForce;
-    [SerializeField] float explosionDemage;
-
+    [SerializeField] int explosionDemage;
     private bool isExploded=false;
     private void OnCollisionEnter(Collision collision)
     {
         if (!isExploded)
         {
-            Debug.Log("Explosion!");
+            //Debug.Log("Explosion!");
             GetComponent<AudioSource>().PlayOneShot(explosionSFX);
+            Instantiate(explosionVFX, collision.contacts[0].point+new Vector3(0,0.5f,0),Quaternion.identity);
             GetComponent<MeshRenderer>().enabled = false;
             Destroy(gameObject, selfDestroyDelay);
             isExploded = true;
@@ -26,9 +26,9 @@ public class ThrowablePrefab : MonoBehaviour
             Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
             foreach(Collider collider in colliders)
             {
-                if (collider.GetComponent<EnemyHealth>())
+                if (collider.GetComponentInParent<EnemyHealth>())
                 {
-                    collider.GetComponent<EnemyHealth>().TakeDamage(explosionDemage);
+                    collider.GetComponentInParent<EnemyHealth>().TakeDamage(explosionDemage);
                 }
             }
 

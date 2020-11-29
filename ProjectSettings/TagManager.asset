@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Fire
+  - Pickup
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - 
   - MiniMapUI
   - postprocessing
-  - 
+  - Enemys
   - 
   - 
   - 
