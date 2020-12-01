@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3382126943306479250}
   - component: {fileID: 3382126943306479253}
   - component: {fileID: 3382126943306479252}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AmmoPickUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 362cf22c4ca5cf14b8f085330517a3a5,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 362cf22c4ca5cf14b8f085330517a3a5, type: 3}
@@ -188,7 +188,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 362cf22c4ca5cf14b8f085330517a3a5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.323
+      value: -0.55
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 362cf22c4ca5cf14b8f085330517a3a5,
         type: 3}
@@ -263,7 +263,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 362cf22c4ca5cf14b8f085330517a3a5,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 362cf22c4ca5cf14b8f085330517a3a5, type: 3}
@@ -293,7 +293,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 362cf22c4ca5cf14b8f085330517a3a5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.3072
+      value: 1.58
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 362cf22c4ca5cf14b8f085330517a3a5,
         type: 3}
@@ -358,7 +358,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 362cf22c4ca5cf14b8f085330517a3a5,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 362cf22c4ca5cf14b8f085330517a3a5, type: 3}

@@ -287,6 +287,9 @@
     <Reference Include="DOTweenEditor">
       <HintPath>E:/Unity projects/Zombie-runner/Assets/Plugins/Demigiant/DOTween/Editor/DOTweenEditor.dll</HintPath>
     </Reference>
+    <Reference Include="clipper_library">
+      <HintPath>E:/Unity projects/Zombie-runner/Library/PackageCache/com.unity.cinemachine@2.7.1/Runtime/ThirdParty/clipper_library.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>E:/Unity projects/Zombie-runner/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
     </Reference>

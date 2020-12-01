@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Fire
   - Pickup
+  - Zombie
   layers:
   - Default
   - TransparentFX
@@ -18,8 +19,8 @@ TagManager:
   - MiniMapUI
   - postprocessing
   - Enemys
-  - 
-  - 
+  - IgnoreLIghts
+  - Player
   - 
   - 
   - 

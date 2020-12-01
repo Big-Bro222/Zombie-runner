@@ -1,13 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponSlot : MonoBehaviour
 {
     //Default weapon;
+
+    [Serializable]
+    public class Weaponcollection
+    {
+        public string name;
+        public Transform weapon;
+    }
     public Weapon Gun;
     public ThrowWeapon throwWeapon;
     public Transform disabledWeapon;
+    public List<Weaponcollection> weaponcollections;
     [SerializeField] Transform weaponCollection;
 
     private void Awake()
@@ -15,9 +24,9 @@ public class WeaponSlot : MonoBehaviour
         string weaponName = GlobalModel.Instance.startWeapon;
         Gun = weaponCollection.Find(weaponName).GetComponent<Weapon>();
         Gun.transform.parent = transform;
-        foreach(Transform weapon in weaponCollection)
+        for(int i = 0; i < weaponCollection.childCount; i++)
         {
-            weapon.parent = disabledWeapon;
+            weaponCollection.GetChild(i).gameObject.SetActive(false);
         }
     }
     public void PickUpWeapon(Transform weapon)
@@ -33,7 +42,6 @@ public class WeaponSlot : MonoBehaviour
             {
                 SwitchWeapon(weaponName);
             }
-            Gun = weapon.GetComponent<Weapon>();
 
         }
         else if(weapon.GetComponent<ThrowWeapon>())
@@ -54,24 +62,70 @@ public class WeaponSlot : MonoBehaviour
     }
     private void SwitchWeapon(string futureWeaponName)
     {
-        Transform futureWeapon = disabledWeapon.Find(futureWeaponName);
-        futureWeapon.parent = transform;
 
+        Transform futureWeapon=transform;
+        foreach(Weaponcollection weaponcollection in weaponcollections)
+        {
+            if (weaponcollection.name.Equals(futureWeaponName))
+            {
+                futureWeapon = weaponcollection.weapon;
+            }
+        };
+        if (futureWeapon == transform)
+        {
+            Debug.LogError("Cannot find the weapon: " + futureWeaponName);
+            return;
+        }
+        futureWeapon.gameObject.SetActive(true);
+        futureWeapon.parent = transform;
+        Gun = futureWeapon.GetComponent<Weapon>();
     }
 
     private void SwitchWeapon(string previousWeaponName,string futureWeaponName)
     {
-        Debug.Log(previousWeaponName+" and after "+ futureWeaponName);
-        Transform previousWeapon = transform.Find(previousWeaponName);
-        int siblingIndex = previousWeapon.GetSiblingIndex();
+        if (previousWeaponName.Equals(futureWeaponName))
+        {
+            Gun.AmmoReset();
+            Gun.DisplayAmmo();
+        }
+        else
+        {
+            //find previous weapon
+            Transform previousWeapon = transform.Find(previousWeaponName);
+            int siblingIndex = previousWeapon.GetSiblingIndex();
+
+            //find futureWeapon
+            Transform futureWeapon = transform;
+            foreach (Weaponcollection weaponcollection in weaponcollections)
+            {
+                if (weaponcollection.name.Equals(futureWeaponName))
+                {
+                    Debug.Log("Find");
+                    futureWeapon = weaponcollection.weapon;
+                }
+            };
+            Debug.Log(futureWeapon.name);
+
+            if (futureWeapon == transform)
+            {
+                Debug.LogError("Cannot find the weapon: " + futureWeaponName);
+                return;
+            }
+            futureWeapon.gameObject.SetActive(true);
+           
+            //swap weapons
+            futureWeapon.parent = transform;
+            previousWeapon.parent = weaponCollection;
+            previousWeapon.gameObject.SetActive(false);
+
+            futureWeapon.SetSiblingIndex(siblingIndex);
+            previousWeapon.GetComponent<Weapon>().AmmoReset();
+
+            Gun = futureWeapon.GetComponent<Weapon>();
+        }
+        
 
 
-        Transform futureWeapon = disabledWeapon.Find(futureWeaponName);
 
-        previousWeapon.parent = disabledWeapon;
-        futureWeapon.SetSiblingIndex(siblingIndex);
-        previousWeapon.GetComponent<Weapon>().AmmoReset();
-
-        futureWeapon.parent = transform;
     }
 }

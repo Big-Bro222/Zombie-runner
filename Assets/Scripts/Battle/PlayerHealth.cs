@@ -48,7 +48,7 @@ public class PlayerHealth : MonoBehaviour
 
         if (hitPoints <= 0)
         {
-            DeathHandler.Instance.HandleDeath();
+            DeathHandler.Instance.HandleDeath(DeathReason.PlayerDead);
         }
     }
 

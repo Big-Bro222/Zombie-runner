@@ -54,6 +54,7 @@ public class WeaponZoom : MonoBehaviour
 
     private void ZoomIn()
     {
+        GetComponent<Weapon>().source.m_ImpulseDefinition.m_AmplitudeGain /= 2;
         zoomedInToggle = true;
         fpsCamera.fieldOfView = zoomedInFOV;
         fpsController.mouseLook.XSensitivity = zoomInSensitivity;
@@ -62,6 +63,7 @@ public class WeaponZoom : MonoBehaviour
 
     private void ZoomOut()
     {
+        GetComponent<Weapon>().source.m_ImpulseDefinition.m_AmplitudeGain *= 2;
         zoomedInToggle = false;
         fpsCamera.fieldOfView = zoomedOutFOV;
         fpsController.mouseLook.XSensitivity = zoomOutSensitivity;

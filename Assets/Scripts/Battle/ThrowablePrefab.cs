@@ -11,6 +11,12 @@ public class ThrowablePrefab : MonoBehaviour
     [SerializeField] float explosionForce;
     [SerializeField] int explosionDemage;
     private bool isExploded=false;
+
+
+    private void Start()
+    {
+        Physics.IgnoreLayerCollision(12,12);
+    }
     private void OnCollisionEnter(Collision collision)
     {
         if (!isExploded)

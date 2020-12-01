@@ -257,6 +257,9 @@
     <Reference Include="DOTween">
       <HintPath>E:/Unity projects/Zombie-runner/Assets/Plugins/Demigiant/DOTween/DOTween.dll</HintPath>
     </Reference>
+    <Reference Include="clipper_library">
+      <HintPath>E:/Unity projects/Zombie-runner/Library/PackageCache/com.unity.cinemachine@2.7.1/Runtime/ThirdParty/clipper_library.dll</HintPath>
+    </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Unity/2019.4.11f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
     </Reference>

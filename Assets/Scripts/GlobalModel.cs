@@ -11,6 +11,10 @@ public sealed class GlobalModel
     public GlobalModel()
     {
         HighestScore = 100;
+        Score = new List<float>();
+        Score.Add(HighestScore);
+        ZombieTypes = new List<string>();
+        ZombieTypes.Add("Zombie_Underwear_Male_01");
         DefualtSettings();
     }
 
@@ -37,6 +41,8 @@ public sealed class GlobalModel
     public float SFXVolume { get; set; }
     public int HighestScore { get; set; }
 
+    public List<string> ZombieTypes { get; set; }
+    public List<float> Score { get; set; }
     public void DefualtSettings()
     {
         startWeapon = "AK47";

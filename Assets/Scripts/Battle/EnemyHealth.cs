@@ -51,6 +51,11 @@ public class EnemyHealth : MonoBehaviour
         Transform zombie = transform.GetChild(0);
         GetComponent<Animator>().enabled = false;
         GetComponent<ZombieAI>().enabled = false;
+        Invoke("DisableGameObject", 2);
+    }
+
+    private void DisableGameObject()
+    {
         gameObject.SetActive(false);
     }
 }

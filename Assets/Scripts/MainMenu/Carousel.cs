@@ -21,11 +21,12 @@ public class Carousel : MonoBehaviour
         int previousIndex = currentIndex;
         if (isSelected)
         {
-                    ProcessScrollWheel();
-        if (previousIndex != currentIndex)
-        {
-            SetItemActive();
-        }
+            ProcessScrollWheel();
+            //if (previousIndex != currentIndex)
+            //{
+            //    Debug.Log("Change");
+            //    SetItemActive();
+            //}
         }
 
 
@@ -35,29 +36,44 @@ public class Carousel : MonoBehaviour
     {
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            if (currentIndex >= transform.childCount - 1)
-            {
-                currentIndex = 0;
-            }
-            else
-            {
-                currentIndex++;
-            }
+            NextItem();
         }
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
-            if (currentIndex <= 0)
-            {
-                currentIndex = transform.childCount - 1;
-            }
-            else
-            {
-                currentIndex--;
-            }
+            LastItem();
         }
     }
 
+    public void LastItem()
+    {
+        Debug.Log("Last");
+        if (currentIndex <= 0)
+        {
+            currentIndex = transform.childCount - 1;
+        }
+        else
+        {
+            currentIndex--;
+        }
+        SetItemActive();
+
+    }
+
+    public void NextItem()
+    {
+
+        if (currentIndex >= transform.childCount - 1)
+        {
+            currentIndex = 0;
+        }
+        else
+        {
+            currentIndex++;
+        }
+        SetItemActive();
+
+    }
 
     private void SetItemActive()
     {

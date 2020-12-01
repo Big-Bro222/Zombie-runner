@@ -15,7 +15,7 @@ public class ItemSpawn : MonoBehaviour
     [SerializeField] int Wave;
     [SerializeField] int SpawnAmount;
     [SerializeField] float InstantiateHeight;
-    public TextMeshProUGUI text;
+    //public TextMeshProUGUI text;
     public bool isPlaying;
     private float timeCount;
     private int spawnPointCount;
@@ -27,16 +27,16 @@ public class ItemSpawn : MonoBehaviour
         timeCount = 0;
         spawnPointCount = transform.childCount;
         totalZombieCount = 0;
-        if (spawnType == SpawnType.Zombie)
-        {
-            UpdateUI();
-        }
+        //if (spawnType == SpawnType.Zombie)
+        //{
+        //    UpdateUI();
+        //}
     }
 
-    private void UpdateUI()
-    {
-        text.text = totalZombieCount.ToString();
-    }
+    //private void UpdateUI()
+    //{
+    //    text.text = totalZombieCount.ToString();
+    //}
 
 
     private void Update()
@@ -85,6 +85,10 @@ public class ItemSpawn : MonoBehaviour
 
     private void SpawnEnemyWave()
     {
+        if (SpawnAmount > transform.childCount)
+        {
+            Debug.LogError("you have selected too much spawnpoint in " + transform.name);
+        }
         List<int> spawnPointIndex = GetRandomList(SpawnAmount);
 
         Wave++;
@@ -101,7 +105,7 @@ public class ItemSpawn : MonoBehaviour
         //    //Instantiate(item, spawnPoint.position, Quaternion.identity, spawnFolder);
         //}
         totalZombieCount += SpawnAmount;
-        UpdateUI();
+        //UpdateUI();
     }
 
     private List<int> GetRandomList(int listCount)
@@ -109,7 +113,8 @@ public class ItemSpawn : MonoBehaviour
         List<int> spawnPointIndex = new List<int>();
         while (listCount > 0)
         {
-            int random = UnityEngine.Random.Range(0, spawnPointCount-1);
+            System.Random rand = new System.Random((int)DateTime.Now.Ticks);
+            int random = rand.Next(0, spawnPointCount - 1);
             if (!spawnPointIndex.Contains(random))
             {
                 spawnPointIndex.Add(random);

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using Cinemachine;
 
 public class Weapon : MonoBehaviour
 {
@@ -22,9 +24,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] AudioSource GlobalAudio;
     [SerializeField] float range = 100f;
     [SerializeField] int damage = 30;
-    [SerializeField] ParticleSystem muzzleFlash;
+    [SerializeField] ParticleSystem[] muzzleFlashs;
     [SerializeField] GameObject hitEffect;
-    [SerializeField] AmmoType ammoType;
+    //[SerializeField] AmmoType ammoType;
     [SerializeField] float timeBetweenShots = 0.5f;
     [SerializeField] float reloadTime = 0.5f;
 
@@ -32,14 +34,22 @@ public class Weapon : MonoBehaviour
     [SerializeField] TextMeshProUGUI currentClipText;
     [SerializeField] bool Auto;
     [SerializeField] bool isShotgun;
-    [SerializeField] Transform disabledWeapon;
-
+    [SerializeField] Transform weaponCollection;
+    [SerializeField] Image crossHairImage;
+    [SerializeField] float recoilStrength;
+    [SerializeField] float reloadRotationAngle;
+    public CinemachineImpulseSource source;
     private int defaultAmmoAmount;
 
     private void Start()
     {
         defaultAmmoAmount = ammo.ammoAmount;
+        //rotationPivot = transform.GetChild(0);
+        //Debug.Log(rotationPivot.name);
+        //weaponModel = transform.GetChild(1);
+        //Debug.Log(weaponModel.name);
     }
+
 
     public void AmmoReset()
     {
@@ -56,7 +66,7 @@ public class Weapon : MonoBehaviour
         DisplayAmmo();
         w_audioSource = GetComponent<AudioSource>();
         canShoot = true;
-       
+        source.m_ImpulseDefinition.m_AmplitudeGain = recoilStrength;
     }
 
     void Update()
@@ -67,6 +77,7 @@ public class Weapon : MonoBehaviour
             {
                 StartCoroutine(Shoot());
             }
+
         }
         else
         {
@@ -95,6 +106,7 @@ public class Weapon : MonoBehaviour
             w_audioSource.PlayOneShot(soundSettings.reloadingSFX);
             GlobalAudio.PlayOneShot(soundSettings.soldierReloadingSFX);
             ammo.Reload();
+            //StartCoroutine(ReloadWeapon());
         }
         else
         {
@@ -105,8 +117,31 @@ public class Weapon : MonoBehaviour
         canShoot = true;
     }
 
+    //IEnumerator ReloadWeapon()
+    //{
+    //    Debug.Log("reload");
+    //    float rotatedAngle = 0;
+    //    float rotatedTime = reloadTime/10;
+    //    while(rotatedAngle< reloadRotationAngle)
+    //    {
+    //        Debug.Log("yes");
+    //        rotatedAngle += reloadRotationAngle / 10;
+    //        transform.Rotate(transform.right, );
+    //        transform.RotateAround(target.transform.position, transform.right, reloadRotationAngle / 10);
+    //    }        
+    //    yield return new WaitForSeconds(rotatedTime);
+
+    //    Debug.Log("yes");
+    //}
+
     public void DisplayAmmo()
     {
+        if (ammo.isInfinity)
+        {
+            ammoText.text = "Infinity";
+            return;
+        }
+
         int currentRemain = ammo.GetCurrentRemain();
         ammoText.text = currentRemain.ToString();
         currentClipText.text = ammo.GetCurrentClip().ToString();
@@ -114,6 +149,7 @@ public class Weapon : MonoBehaviour
 
     IEnumerator Shoot()
     {
+        crossHairImage.color = Color.red;
         canShoot = false;
         if (ammo.GetCurrentClip()> 0)
         {
@@ -122,25 +158,31 @@ public class Weapon : MonoBehaviour
             ProcessRaycast();
             ammo.ReduceCurrentAmmo();
             DisplayAmmo();
+            source.GenerateImpulse(Camera.main.transform.forward);
         }
         else
         {
             w_audioSource.PlayOneShot(soundSettings.emptyClipSFX);
         }
         yield return new WaitForSeconds(timeBetweenShots);
+        crossHairImage.color = Color.white;
         canShoot = true;
         if (ammo.GetCurrentRemain() <= 0&&!ammo.isInfinity&&ammo.currentClip<=0)
         {
             GetComponentInParent<WeaponSwitcher>().SwitchToNextWeapon();
             AmmoReset();
-            transform.SetParent(disabledWeapon);
+            gameObject.SetActive(false);
+            transform.SetParent(weaponCollection);
 
         }
     }
 
     private void PlayMuzzleFlash()
     {
-        muzzleFlash.Play();
+        foreach(ParticleSystem particleSystem in muzzleFlashs)
+        {
+            particleSystem.Play();
+        }
     }
 
     private void ProcessRaycast()
@@ -209,7 +251,6 @@ public class Weapon : MonoBehaviour
             {
                 EnemyHealth target = shotHit.transform.GetComponentInParent<EnemyHealth>();
                 if (target == null) return;
-                Debug.Log(target.name);
                 float distanceHitGun = Vector3.Distance(shotHit.point, FPCamera.transform.position);
                 //float decayedDamage = (1 - distanceHitGun / range) * damage;
                 target.TakeDamage(damage);
@@ -226,8 +267,8 @@ public class Weapon : MonoBehaviour
 
     private void CreateHitImpact(RaycastHit[] hits)
     {
-        //To do: impact fx
-        Debug.Log("Impact FX");
+
+
     }
     private void OnDrawGizmos()
     {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3527810089176343885}
   - component: {fileID: 3527810089176343882}
   - component: {fileID: 3527810089176343883}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Throwable PickUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 8517004046773777586}
   - component: {fileID: 8526713153208326752}
   - component: {fileID: 8535118105103716914}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Pin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 8515432270179704972}
   - component: {fileID: 8526782475565312190}
   - component: {fileID: 8534478917700057842}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: RGD-5 -Throwable Variant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 8517084953098518878}
   - component: {fileID: 8526512476540314090}
   - component: {fileID: 8536096451870487422}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: 01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

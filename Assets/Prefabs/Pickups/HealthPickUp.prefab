@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4207661370767410731}
   - component: {fileID: 4207661370767410728}
   - component: {fileID: 4207661370767410729}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 4207661371207832569}
   - component: {fileID: 4207661371207832566}
   - component: {fileID: 4207661371207832567}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 8911230405153459886}
   - component: {fileID: 8911230405153459881}
   - component: {fileID: 8911230405153459884}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HealthPickUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}

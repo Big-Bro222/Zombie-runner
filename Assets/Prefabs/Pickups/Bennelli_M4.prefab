@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4344558326982152616}
   - component: {fileID: 6423981587666097700}
   - component: {fileID: 6423981587666097701}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bennelli_M4
   m_TagString: Pickup
   m_Icon: {fileID: 0}
@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickUpSFX: {fileID: 8300000, guid: 427c7d96199c5bf43b02a3a7532c2fd0, type: 3}
-  SelfDestroyTime: 100
+  SelfDestroyTime: 20
 --- !u!114 &6423981587666097701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,6 +89,18 @@ PrefabInstance:
     - target: {fileID: 1236257789494122, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: m_Name
       value: Bennelli_M4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1236257789494122, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1326079549577358, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1584542541181842, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4243371153570508, guid: 8b0b86b42def11849a8eba21f4a6a684, type: 3}
       propertyPath: m_LocalPosition.x

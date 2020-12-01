@@ -8,6 +8,7 @@ public class MapSelectionState : GameState
     public event Action onStateEnter;
     public event Action onStateExit;
     [SerializeField] private GameObject spotLight;
+    [SerializeField] List<GameObject> disableObjects;
     public override void TransitionEnter()
     {
         selected = true;
@@ -15,6 +16,10 @@ public class MapSelectionState : GameState
         CinemachineController.Instance.SetupCamera(cameraIndex);
         GetComponentInChildren<Carousel>().isSelected = true;
         spotLight.SetActive(true);
+        foreach(GameObject disableObject in disableObjects)
+        {
+            disableObject.SetActive(true);
+        }
     }
 
     public override void TransitionExit()
@@ -24,6 +29,10 @@ public class MapSelectionState : GameState
         GetComponentInChildren<CameraTransitionTrigger>().ResetOutline();
         GetComponentInChildren<Carousel>().isSelected = false;
         spotLight.SetActive(false);
+        foreach (GameObject disableObject in disableObjects)
+        {
+            disableObject.SetActive(false);
+        }
         //onStateExit();
     }
 }
