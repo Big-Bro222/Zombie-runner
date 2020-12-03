@@ -18,9 +18,21 @@ public class WeaponSlot : MonoBehaviour
     public Transform disabledWeapon;
     public List<Weaponcollection> weaponcollections;
     [SerializeField] Transform weaponCollection;
+    private static WeaponSlot _instance;
+
+    public static WeaponSlot Instance { get { return _instance; } }
 
     private void Awake()
     {
+
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            _instance = this;
+        }
         string weaponName = GlobalModel.Instance.startWeapon;
         Gun = weaponCollection.Find(weaponName).GetComponent<Weapon>();
         Gun.transform.parent = transform;

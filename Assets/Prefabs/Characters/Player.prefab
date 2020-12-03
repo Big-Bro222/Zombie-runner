@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &666187515
 Transform:
   m_ObjectHideFlags: 0
@@ -186,6 +186,13 @@ MonoBehaviour:
   Gun: {fileID: 0}
   throwWeapon: {fileID: 7312911269822182555}
   disabledWeapon: {fileID: 666187515}
+  weaponcollections:
+  - name: AK47
+    weapon: {fileID: 7312911268109549479}
+  - name: Bennelli_M4
+    weapon: {fileID: 315864241245415566}
+  - name: M4_8
+    weapon: {fileID: 5825100029006583889}
   weaponCollection: {fileID: 770335531028445218}
 --- !u!1 &3136072080405925097
 GameObject:
@@ -685,7 +692,7 @@ GameObject:
   - component: {fileID: 638311694}
   - component: {fileID: 705329951}
   - component: {fileID: 705329952}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -828,7 +835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be901a377ccb9fa4abf0803f67573f80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1000
+  health: 300
   postprocessVolume: {fileID: 0}
   fastHeartBiteSFX: {fileID: 638311694}
   textMeshProUGUI: {fileID: 0}
@@ -1053,6 +1060,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98d383d5a45d5454cbd1941d87ab0a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scaleLoadingTime: 30
+  timeImage: {fileID: 0}
 --- !u!114 &705329952
 MonoBehaviour:
   m_ObjectHideFlags: 0

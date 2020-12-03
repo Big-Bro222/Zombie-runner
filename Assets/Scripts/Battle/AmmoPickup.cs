@@ -28,6 +28,7 @@ public class AmmoPickup : Pickup
             {
                 other.GetComponentInChildren<WeaponSlot>().throwWeapon.ReloadAmmo(ammoAmount);
             }
+            ObjectsPool.instance.SpawnFromPool("Particle", transform.position);
             Destroy(gameObject);
 
         }

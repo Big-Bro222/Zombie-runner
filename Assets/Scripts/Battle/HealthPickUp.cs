@@ -18,6 +18,8 @@ public class HealthPickUp : Pickup
         {
             other.GetComponent<AudioSource>().PlayOneShot(pickUpSFX);
             other.GetComponentInChildren<PlayerHealth>().Heal(HealthPoint);
+            ObjectsPool.instance.SpawnFromPool("Particle", transform.position);
+
             Destroy(gameObject);
 
         }

@@ -19,18 +19,16 @@ public class ItemSpawn : MonoBehaviour
     public bool isPlaying;
     private float timeCount;
     private int spawnPointCount;
-    private int totalZombieCount;
     private void Start()
     {
         Wave = 0;
         isPlaying = true;
         timeCount = 0;
         spawnPointCount = transform.childCount;
-        totalZombieCount = 0;
-        //if (spawnType == SpawnType.Zombie)
-        //{
-        //    UpdateUI();
-        //}
+        if (SpawnAmount<=5&&spawnType==SpawnType.Zombie)
+        {
+            Debug.LogError("the SpawnAmount is too low");
+        }
     }
 
     //private void UpdateUI()
@@ -62,14 +60,13 @@ public class ItemSpawn : MonoBehaviour
     private void SpawnPickUpWave()
     {
         List<int> spawnPointIndex = GetRandomList(SpawnAmount);
-
-        Wave++;
         foreach(int index in spawnPointIndex)
         {
             int prefabIndex = UnityEngine.Random.Range(0, Prefabs.Count - 1);
             GameObject item = Prefabs[prefabIndex];
             InstantiateHeightSetUp(item, transform.GetChild(index).position);
         }
+        Wave++;
     }
 
     private void InstantiateHeightSetUp(GameObject item, Vector3 position)
@@ -89,23 +86,29 @@ public class ItemSpawn : MonoBehaviour
         {
             Debug.LogError("you have selected too much spawnpoint in " + transform.name);
         }
-        List<int> spawnPointIndex = GetRandomList(SpawnAmount);
-
-        Wave++;
-        foreach (int index in spawnPointIndex)
+        foreach (string zombieprefabName in GlobalModel.Instance.ZombieTypes)
         {
-            ObjectsPool.instance.SpawnFromPool("Zombie", transform.GetChild(index).position, Quaternion.identity);
+            if (!zombieprefabName.Equals("Zombie_Underwear"))
+            {
+                System.Random rand = new System.Random((int)DateTime.Now.Ticks);
+                int random = rand.Next(0, spawnPointCount - 1);
+                ObjectsPool.instance.SpawnFromPool(zombieprefabName, transform.GetChild(random).position, Quaternion.identity);
+            }
+            else
+            {
+                List<int> spawnPointIndex = GetRandomList(SpawnAmount);
+                foreach (int index in spawnPointIndex)
+                {
+                    ObjectsPool.instance.SpawnFromPool("Zombie_Underwear", transform.GetChild(index).position, Quaternion.identity);
+                }
+            }
         }
 
-        //foreach (Transform spawnPoint in transform)
-        //{
-        //    //int prefabIndex = UnityEngine.Random.Range(0, Prefabs.Count - 1);
-        //    //GameObject item = Prefabs[prefabIndex];
-        //    ObjectsPool.instance.SpawnFromPool("Zombie", spawnPoint.position, Quaternion.identity);
-        //    //Instantiate(item, spawnPoint.position, Quaternion.identity, spawnFolder);
-        //}
-        totalZombieCount += SpawnAmount;
-        //UpdateUI();
+
+
+
+        Wave++;
+
     }
 
     private List<int> GetRandomList(int listCount)

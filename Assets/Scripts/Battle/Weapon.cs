@@ -44,6 +44,7 @@ public class Weapon : MonoBehaviour
     private void Start()
     {
         defaultAmmoAmount = ammo.ammoAmount;
+        source.m_ImpulseDefinition.m_AmplitudeGain = recoilStrength;
         //rotationPivot = transform.GetChild(0);
         //Debug.Log(rotationPivot.name);
         //weaponModel = transform.GetChild(1);
@@ -63,6 +64,7 @@ public class Weapon : MonoBehaviour
     bool canShoot = true;
     private void OnEnable()
     {
+        Debug.Log(name);
         DisplayAmmo();
         w_audioSource = GetComponent<AudioSource>();
         canShoot = true;
@@ -117,28 +119,13 @@ public class Weapon : MonoBehaviour
         canShoot = true;
     }
 
-    //IEnumerator ReloadWeapon()
-    //{
-    //    Debug.Log("reload");
-    //    float rotatedAngle = 0;
-    //    float rotatedTime = reloadTime/10;
-    //    while(rotatedAngle< reloadRotationAngle)
-    //    {
-    //        Debug.Log("yes");
-    //        rotatedAngle += reloadRotationAngle / 10;
-    //        transform.Rotate(transform.right, );
-    //        transform.RotateAround(target.transform.position, transform.right, reloadRotationAngle / 10);
-    //    }        
-    //    yield return new WaitForSeconds(rotatedTime);
-
-    //    Debug.Log("yes");
-    //}
-
     public void DisplayAmmo()
     {
         if (ammo.isInfinity)
         {
             ammoText.text = "Infinity";
+            currentClipText.text = ammo.GetCurrentClip().ToString();
+
             return;
         }
 
@@ -173,6 +160,7 @@ public class Weapon : MonoBehaviour
             AmmoReset();
             gameObject.SetActive(false);
             transform.SetParent(weaponCollection);
+            WeaponSlot.Instance.Gun = null;
 
         }
     }
@@ -192,6 +180,10 @@ public class Weapon : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(FPCamera.transform.position, FPCamera.transform.forward, out hit, range))
             {
+                if (hit.collider.gameObject.layer == 12)
+                {
+                    return;
+                }
                 CreateHitImpact(hit);
                 EnemyHealth target = hit.transform.GetComponentInParent<EnemyHealth>();
                 if (target == null) return;

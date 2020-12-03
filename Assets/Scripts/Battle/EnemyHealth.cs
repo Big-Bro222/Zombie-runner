@@ -6,11 +6,14 @@ public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] int Health = 100;
     [SerializeField] GameObject miniMapIcon;
+    [SerializeField] Color iconColor;
     bool isDead = false;
     private int hitPoints;
     Collider[] colliders;
     private void Awake()
     {
+        miniMapIcon.GetComponent<MeshRenderer>().material.SetColor("_EmissionColor", iconColor); ;
+
         hitPoints = Health;
         colliders = GetComponentsInChildren<Collider>();
         foreach(Collider collider in colliders)
@@ -39,19 +42,16 @@ public class EnemyHealth : MonoBehaviour
         //Update score
         ScoreSystem.Instance.AddScore(Health);
         ScoreView.Instance.StartCoroutine(ScoreView.Instance.UpdateCurrentScore());
-        foreach (Collider collider in colliders)
-        {
-            collider.enabled = true;
-        }
         GetComponent<CapsuleCollider>().enabled = false;
         if (isDead) return;
         isDead = true;
         miniMapIcon.SetActive(false);
-        GetComponent<Animator>().SetTrigger("die");
+        //GetComponent<Animator>().SetTrigger("die");
         Transform zombie = transform.GetChild(0);
         GetComponent<Animator>().enabled = false;
         GetComponent<ZombieAI>().enabled = false;
-        Invoke("DisableGameObject", 2);
+        DisableGameObject();
+        ObjectsPool.instance.SpawnFromPool("Particle", transform.position);
     }
 
     private void DisableGameObject()

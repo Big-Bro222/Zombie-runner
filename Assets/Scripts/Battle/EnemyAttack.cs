@@ -7,10 +7,6 @@ public class EnemyAttack : MonoBehaviour
     Transform gameTarget;
     [SerializeField] int damage = 40;
 
-    void Start()
-    {
-
-    }
 
     public void SetTarget(Transform target)
     {

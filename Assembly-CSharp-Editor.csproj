@@ -63,7 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Asset Packs\DarkFantasyKit [Free]\Readme\Parts\Editor\ReadmeEditor.cs" />
+    <Compile Include="Assets\Asset Packs\DarkFurniture\Readme\Parts\Editor\ReadmeEditor.cs" />
     <Compile Include="Assets\Asset Packs\Standard Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" />
     <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\GerstnerDisplaceEditor.cs" />
     <Compile Include="Assets\Asset Packs\Standard Assets\Editor\Water\Water4\PlanarReflectionEditor.cs" />

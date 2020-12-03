@@ -9,6 +9,7 @@ public class ZombieTypeSelection : MonoBehaviour
     [SerializeField] private AudioClip clickSFX;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private GameObject propertiesIndicator;
+    [SerializeField] private ParticleSystem particleSystem;
     private bool selected = false;
 
     private void Start()
@@ -24,6 +25,7 @@ public class ZombieTypeSelection : MonoBehaviour
         selected = !selected;
         if (selected)
         {
+            particleSystem.Play();
             GlobalModel.Instance.ZombieTypes.Add(name);
             GetComponent<Outline>().OutlineWidth = 2;
             GetComponent<Animator>().Play("GetHit");

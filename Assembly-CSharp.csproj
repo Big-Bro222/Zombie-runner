@@ -63,7 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Asset Packs\DarkFantasyKit [Free]\Readme\Parts\Readme.cs" />
+    <Compile Include="Assets\Asset Packs\DarkFurniture\Readme\Parts\Readme.cs" />
     <Compile Include="Assets\Asset Packs\Standard Assets\Cameras\Scripts\AbstractTargetFollower.cs" />
     <Compile Include="Assets\Asset Packs\Standard Assets\Cameras\Scripts\AutoCam.cs" />
     <Compile Include="Assets\Asset Packs\Standard Assets\Cameras\Scripts\FreeLookCam.cs" />
@@ -140,12 +140,15 @@
     <Compile Include="Assets\Asset Packs\Ultimate 10 Plus Shaders\Scripts\U10PS_MouseRotation.cs" />
     <Compile Include="Assets\Asset Packs\Ultimate 10 Plus Shaders\Scripts\U10PS_SnowOverTime.cs" />
     <Compile Include="Assets\Asset Packs\Ultimate 10 Plus Shaders\Shaders\Plexus\Plexus.cs" />
+    <Compile Include="Assets\BeginText.cs" />
     <Compile Include="Assets\Boundary.cs" />
     <Compile Include="Assets\ButtonViewHandler.cs" />
+    <Compile Include="Assets\DeathVFXController.cs" />
     <Compile Include="Assets\FXIFIED\common\Scripts\PlayerController.cs" />
     <Compile Include="Assets\FXIFIED\common\Scripts\PowerUp.cs" />
     <Compile Include="Assets\FXIFIED\common\Scripts\Quit.cs" />
     <Compile Include="Assets\FacePlayer.cs" />
+    <Compile Include="Assets\ImageController.cs" />
     <Compile Include="Assets\MouseRotationDetection.cs" />
     <Compile Include="Assets\ProCore\ProGrids\Classes\pg_Constant.cs" />
     <Compile Include="Assets\ProCore\ProGrids\Classes\pg_Enum.cs" />

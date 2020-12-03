@@ -6,7 +6,7 @@ public class WeaponPickUp : Pickup
 {
     [SerializeField] AudioClip pickUpSFX;
     [SerializeField] float SelfDestroyTime;
-
+    [SerializeField] ParticleSystem particleSystem;
     private void Start()
     {
         Destroy(gameObject, SelfDestroyTime);
@@ -19,6 +19,8 @@ public class WeaponPickUp : Pickup
             Debug.Log("PickWeapons");
             other.GetComponent<AudioSource>().PlayOneShot(pickUpSFX);
             other.GetComponentInChildren<WeaponSlot>().PickUpWeapon(transform);
+            gameObject.SetActive(false);
+            ObjectsPool.instance.SpawnFromPool("Particle", transform.position);
             Destroy(gameObject);
 
         }

@@ -5,10 +5,16 @@ using UnityEngine;
 using UnityEngine.AI;
 public class ObjectsPool : MonoBehaviour
 {
+    public enum pooltype
+    {
+        particle,
+        Zombie
+    }
     [Serializable]
     public class Pool
     {
         public string tag;
+        public pooltype type;
         public GameObject prefab;
         public int size;
         public Transform AssignedTarget;
@@ -32,7 +38,10 @@ public class ObjectsPool : MonoBehaviour
             for(int i = 0; i < pool.size; i++)
             {
                 GameObject prefab = Instantiate(pool.prefab, poolFolder);
-                prefab.GetComponent<ZombieAI>().AssignedTarget = pool.AssignedTarget;
+                if (pool.type==pooltype.Zombie)
+                {
+                    prefab.GetComponent<ZombieAI>().AssignedTarget = pool.AssignedTarget;
+                }
                 poolqueue.Enqueue(prefab);
                 prefab.SetActive(false);
             }
@@ -40,7 +49,7 @@ public class ObjectsPool : MonoBehaviour
         }
     }
 
-    public void SpawnFromPool(string tag, Vector3 position,Quaternion rotation)
+    public void SpawnFromPool(string tag, Vector3 position)
     {
         if (!poolDictionary.ContainsKey(tag))
         {
@@ -48,9 +57,28 @@ public class ObjectsPool : MonoBehaviour
         }
         GameObject obj = poolDictionary[tag].Dequeue();
         obj.SetActive(true);
+        if (tag.Contains("Zombie"))
+        {
+            obj.GetComponent<NavMeshAgent>().Warp(position);
+        }
+        else
+        {
+            obj.transform.position = position;
+        }
+        poolDictionary[tag].Enqueue(obj);
+    }
+
+    public void SpawnFromPool(string tag, Vector3 position,Quaternion rotation)
+    {
+        if (!poolDictionary.ContainsKey(tag))
+        {
+            Debug.LogError("Pool dictionary don't contain this key"+tag);
+        }
+        GameObject obj = poolDictionary[tag].Dequeue();
+        obj.SetActive(true);
         obj.GetComponent<ZombieAI>().enabled = true;
         obj.GetComponent<Animator>().enabled = true;
-        if (tag.Equals("Zombie"))
+        if (tag.Contains("Zombie"))
         {
             obj.GetComponent<NavMeshAgent>().Warp(position);
         }

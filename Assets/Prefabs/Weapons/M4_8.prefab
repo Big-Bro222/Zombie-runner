@@ -574,7 +574,7 @@ MonoBehaviour:
     emptyClipSFX: {fileID: 8300000, guid: a7a2e4e35d87ee84e870cfd33f967e55, type: 3}
   FPCamera: {fileID: 0}
   GlobalAudio: {fileID: 0}
-  range: 50
+  range: 80
   damage: 50
   muzzleFlashs:
   - {fileID: 2807044564606886357}
@@ -582,14 +582,13 @@ MonoBehaviour:
   - {fileID: 2485779244817348172}
   hitEffect: {fileID: 2348030130814681045, guid: 6ba93be9d610d024e87e7b35a4ef5c15,
     type: 3}
-  ammoType: 1
   timeBetweenShots: 0.05
   reloadTime: 0.5
   ammoText: {fileID: 0}
   currentClipText: {fileID: 0}
   Auto: 1
   isShotgun: 0
-  disabledWeapon: {fileID: 0}
+  weaponCollection: {fileID: 0}
   crossHairImage: {fileID: 0}
   recoilStrength: 0.1
   reloadRotationAngle: 0

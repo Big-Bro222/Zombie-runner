@@ -24,7 +24,10 @@ public class ThrowWeapon : MonoBehaviour
     public void ReloadAmmo(int ammoAmount)
     {
         this.ammoAmount += ammoAmount;
-        UpdateAmmoUI();
+        if (transform.parent.Find("RGD-5"))
+        {
+            UpdateAmmoUI();
+        }
     }
 
     private void OnEnable()

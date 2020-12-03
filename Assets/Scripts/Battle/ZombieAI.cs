@@ -89,16 +89,15 @@ public class ZombieAI : MonoBehaviour
     {
         if(Vector3.Distance(transform.position, Camera.main.transform.position)> CullingDistance)
         {
-            if (bodycollider.enabled)
+            if (skinnedMeshRenderer.enabled)
             {
-                bodycollider.enabled = false;
                 skinnedMeshRenderer.enabled = false;
             }
         }
         else
         {
-            if (!bodycollider.enabled){
-                bodycollider.enabled = true;
+            if (!skinnedMeshRenderer.enabled)
+            {
                 skinnedMeshRenderer.enabled = true;
             }
             
